@@ -1,18 +1,21 @@
 
-# API Spec GateWatchApps
+# API Spec Publisher AtmVideoPack Human Detection
 
-## 1.1 MCU
+## 1.1 Human Detection
 
-### 1.1.1 Get Settings MCU
+### 1.1.1 POST :: Human Detection
 
 Request :
 - Method : POST
-- Endpoint : `api/getwatchapp/v1/mcu/getSettingMcu`
+- Endpoint : `localhost:3333/publisher/atmvideopack/v1/humandetection/create`
 - Header :
     - Content-Type : application/x-www-form-urlencoded
-    - x-api-key : 
+    - x-api-key : required
 - Body (form-data: x-www-form-urlencoded) :
-    - token : string, required
+    - tid : string, required
+    - date_time : string, required
+    - person : string, required
+    - file : file, required
 - Response :
 
 ```json 
@@ -22,38 +25,14 @@ Request :
         "code": "integer",
     },
         "data":{
-            "keypad_password": "string",
-            "delay": "string",
-            "door_name_mcu": "string"  
+            "tid": "string",
+            "date_time": "string",
+            "person": "string",  
+            "converted_file": "string"
         }
  }
 ```
-## 1.2 Registry or Validation Card
-### 1.1.1 Registry or Validation Card and Add Log to DB
 
-Request :
-- Method : POST
-- Endpoint : `/api/getwatchapp/v1/registryandvalidationcard/`
-- Header : 
-    - Content-Type : application/x-www-form-urlencoded
-    - x-api-key : 
-- Body Body (form-data: x-www-form-urlencoded) :
-    - no_card : string, required
-    - door_token : string, required
-- Response :
-
-```json 
-{
-    "meta": {
-        "message": "string",
-        "code": "integer",
-    },
-        "data" : {
-            "log_status": "integer",
-            "message": "string"
-        }
-}
-```
 
 
 

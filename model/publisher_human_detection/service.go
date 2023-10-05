@@ -34,6 +34,6 @@ func (s *service) CreateQueueHumanDetection(input HumanDetectionInput) (HumanDet
 		Tid:           input.Tid,
 		DateTime:      input.DateTime,
 		Person:        input.Person,
-		ConvertedFile: input.ConvertedFile,
+		ConvertedFile: input.File.Filename,
 	}, nil
 }
