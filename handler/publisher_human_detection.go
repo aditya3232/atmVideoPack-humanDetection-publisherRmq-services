@@ -21,7 +21,7 @@ func NewPublisherHumanDetectionHandler(publisherHumanDetectionService publisher_
 
 // public message to rmqg
 func (h *PublisherHumanDetectionHandler) CreateQueueHumanDetection(c *gin.Context) {
-	var input publisher_human_detection.HumanDetectionInput
+	var input publisher_human_detection.RmqPublisherHumanDetectionInput
 
 	err := c.ShouldBindWith(&input, binding.FormMultipart)
 	if err != nil {
@@ -43,7 +43,7 @@ func (h *PublisherHumanDetectionHandler) CreateQueueHumanDetection(c *gin.Contex
 		return
 	}
 
-	response := helper.APIResponse(constant.SuccessMessage, http.StatusOK, publisher_human_detection.FormatPublisherHumanDetection(humanDetection))
+	response := helper.APIResponse(constant.SuccessMessage, http.StatusOK, publisher_human_detection.PublisherHumanDetectionFormat(humanDetection))
 	log.Info("Queue human detection berhasil dibuat")
 	c.JSON(http.StatusOK, response)
 }

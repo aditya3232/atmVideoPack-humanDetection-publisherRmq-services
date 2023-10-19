@@ -4,12 +4,16 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/aditya3232/gatewatchApp-services.git/connection"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 type Repository interface {
-	CreateQueueHumanDetection(input HumanDetectionInput) (HumanDetection, error)
+	/*
+		- ambil input dari API, dimasukkan ke entity rmq
+		- disini parameter adalah entitiy
+		- disini returnnya yg akan ditampilkan di API adalah entity rmq,
+	*/
+	CreateQueueHumanDetection(rmqPublisherHumanDetection RmqPublisherHumanDetection) (RmqPublisherHumanDetection, error)
 }
 
 type repository struct {
@@ -20,10 +24,11 @@ func NewRepository(rabbitmq *amqp.Connection) *repository {
 	return &repository{rabbitmq}
 }
 
-func (r *repository) CreateQueueHumanDetection(input HumanDetectionInput) (HumanDetection, error) {
-	ch, err := connection.RabbitMQ().Channel()
+func (r *repository) CreateQueueHumanDetection(rmqPublisherHumanDetection RmqPublisherHumanDetection) (RmqPublisherHumanDetection, error) {
+
+	ch, err := r.rabbitmq.Channel()
 	if err != nil {
-		return HumanDetection{}, err
+		return rmqPublisherHumanDetection, err
 	}
 	defer ch.Close()
 
@@ -37,21 +42,21 @@ func (r *repository) CreateQueueHumanDetection(input HumanDetectionInput) (Human
 	)
 
 	if err != nil {
-		return HumanDetection{}, err
+		return rmqPublisherHumanDetection, err
 	}
 
-	// body from input
-	var inputReadytoMarshal = HumanDetectionInput{
-		Tid:           input.Tid,
-		DateTime:      input.DateTime,
-		Person:        input.Person,
-		ConvertedFile: input.ConvertedFile,
+	// yang dimarshal adalah entity rmq human detection
+	inputReadytoMarshal := RmqPublisherHumanDetection{
+		TidID:                              rmqPublisherHumanDetection.TidID,
+		DateTime:                           rmqPublisherHumanDetection.DateTime,
+		Person:                             rmqPublisherHumanDetection.Person,
+		ConvertedFileCaptureHumanDetection: rmqPublisherHumanDetection.ConvertedFileCaptureHumanDetection,
 	}
 
 	// Convert the HumanDetection struct to JSON
 	body, err := json.Marshal(inputReadytoMarshal)
 	if err != nil {
-		return HumanDetection{}, err
+		return rmqPublisherHumanDetection, err
 	}
 
 	ctx := context.Background() // Create a context
@@ -67,9 +72,8 @@ func (r *repository) CreateQueueHumanDetection(input HumanDetectionInput) (Human
 	)
 
 	if err != nil {
-		return HumanDetection{}, err
+		return rmqPublisherHumanDetection, err
 	}
 
-	// Return the sent HumanDetection struct
-	return HumanDetection{}, err
+	return rmqPublisherHumanDetection, err
 }

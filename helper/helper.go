@@ -416,6 +416,52 @@ func RemoveFile(file string) {
 
 // ==================================================file upload==================================================
 
+// is image helper
+func IsImage(file *multipart.FileHeader) error {
+	// open file
+	src, err := file.Open()
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	// decode image from file
+	_, _, err = image.Decode(src)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// convert image to jpeg
+func ConvertToJpeg(file *multipart.FileHeader) error {
+	// open file
+	src, err := file.Open()
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	// decode image from file
+	img, _, err := image.Decode(src)
+	if err != nil {
+		return err
+	}
+
+	// create buffer
+	buf := new(bytes.Buffer)
+
+	// encode image to buffer
+	err = jpeg.Encode(buf, img, &jpeg.Options{Quality: 50})
+	if err != nil {
+		return err
+	}
+
+	// return buffer as bytes
+	return nil
+}
+
 func CompressImageBytes(imageBytes []byte) ([]byte, error) {
 	// decode image from bytes
 	img, _, err := image.Decode(bytes.NewReader(imageBytes))

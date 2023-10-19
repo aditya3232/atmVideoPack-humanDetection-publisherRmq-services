@@ -1,14 +1,20 @@
 package publisher_human_detection
 
-type PublisherHumanDetectionFormatter struct {
-	Tid           string `json:"tid"`
-	DateTime      string `json:"date_time"`
-	Person        string `json:"person"`
-	ConvertedFile string `json:"converted_file"`
+// formatter akan menampilkan response di api
+type RmqPublisherHumanDetectionFormatter struct {
+	TidID                         *int   `json:"tid"`
+	DateTime                      string `json:"date_time"`
+	Person                        string `json:"person"`
+	FileNameCaptureHumanDetection string `json:"file_name_capture_human_detection"` // ini untuk balikan file name nya aja di api
 }
 
-// data ditampilkan dari input
-func FormatPublisherHumanDetection(entityHumanDetection HumanDetection) PublisherHumanDetectionFormatter {
-	formatter := PublisherHumanDetectionFormatter(entityHumanDetection)
+func PublisherHumanDetectionFormat(rmqPublisherHumanDetection RmqPublisherHumanDetection) RmqPublisherHumanDetectionFormatter {
+	var formatter RmqPublisherHumanDetectionFormatter
+
+	formatter.TidID = rmqPublisherHumanDetection.TidID
+	formatter.DateTime = rmqPublisherHumanDetection.DateTime
+	formatter.Person = rmqPublisherHumanDetection.Person
+	formatter.FileNameCaptureHumanDetection = rmqPublisherHumanDetection.FileNameCaptureHumanDetection
+
 	return formatter
 }
