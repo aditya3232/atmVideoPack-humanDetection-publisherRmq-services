@@ -453,7 +453,35 @@ func ConvertToJpeg(file *multipart.FileHeader) error {
 	buf := new(bytes.Buffer)
 
 	// encode image to buffer
-	err = jpeg.Encode(buf, img, &jpeg.Options{Quality: 50})
+	err = jpeg.Encode(buf, img, &jpeg.Options{})
+	if err != nil {
+		return err
+	}
+
+	// return buffer as bytes
+	return nil
+}
+
+// convert image to jpg withoout reducce size
+func ConvertImageToJpg(file *multipart.FileHeader) error {
+	// open file
+	src, err := file.Open()
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	// decode image from file
+	img, _, err := image.Decode(src)
+	if err != nil {
+		return err
+	}
+
+	// create buffer
+	buf := new(bytes.Buffer)
+
+	// encode image to buffer
+	err = jpeg.Encode(buf, img, &jpeg.Options{})
 	if err != nil {
 		return err
 	}

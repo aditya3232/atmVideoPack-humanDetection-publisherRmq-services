@@ -10,6 +10,7 @@ type Service interface {
 		- input ada 2, pertama input dari API
 		- kedua input yang akan dimasukkan ke RMQ
 		- disini returnnya yg akan ditampilkan di API adalah inputan rmq,
+		- disini parameter adalah input
 	*/
 	CreateQueueHumanDetection(input RmqPublisherHumanDetectionInput) (RmqPublisherHumanDetection, error)
 }
@@ -26,6 +27,18 @@ func NewService(repository Repository, tbTidRepository tb_tid.Repository) *servi
 // public message to rmq
 func (s *service) CreateQueueHumanDetection(input RmqPublisherHumanDetectionInput) (RmqPublisherHumanDetection, error) {
 	var rmqPublisherHumanDetection RmqPublisherHumanDetection
+
+	// validasi is image
+	err := helper.IsImage(input.FileCaptureHumanDetection)
+	if err != nil {
+		return rmqPublisherHumanDetection, err
+	}
+
+	// convert image to jpg
+	err = helper.ConvertImageToJpg(input.FileCaptureHumanDetection)
+	if err != nil {
+		return rmqPublisherHumanDetection, err
+	}
 
 	// convert img
 	imgBase64String, err := helper.ConvertFileToBase64(input.FileCaptureHumanDetection)
