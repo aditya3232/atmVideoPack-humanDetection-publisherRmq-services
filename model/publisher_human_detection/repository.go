@@ -48,6 +48,7 @@ func (r *repository) CreateQueueHumanDetection(rmqPublisherHumanDetection RmqPub
 	// yang dimarshal adalah entity rmq human detection
 	inputReadytoMarshal := RmqPublisherHumanDetection{
 		TidID:                              rmqPublisherHumanDetection.TidID,
+		Tid:                                rmqPublisherHumanDetection.Tid,
 		DateTime:                           rmqPublisherHumanDetection.DateTime,
 		Person:                             rmqPublisherHumanDetection.Person,
 		ConvertedFileCaptureHumanDetection: rmqPublisherHumanDetection.ConvertedFileCaptureHumanDetection,

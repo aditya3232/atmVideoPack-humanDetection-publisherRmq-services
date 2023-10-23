@@ -57,6 +57,7 @@ func (s *service) CreateQueueHumanDetection(input RmqPublisherHumanDetectionInpu
 
 	newRmqPublisherHumanDetection := RmqPublisherHumanDetection{
 		TidID:                              &tidID.ID,
+		Tid:                                input.Tid,
 		DateTime:                           input.DateTime,
 		Person:                             input.Person,
 		ConvertedFileCaptureHumanDetection: imgBase64String,
