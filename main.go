@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/aditya3232/gatewatchApp-services.git/config"
-	"github.com/aditya3232/gatewatchApp-services.git/connection"
-	"github.com/aditya3232/gatewatchApp-services.git/helper"
-	"github.com/aditya3232/gatewatchApp-services.git/routes"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/config"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/connection"
+	_ "github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/cron"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/helper"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/routes"
 	"github.com/gin-gonic/gin"
 )
 

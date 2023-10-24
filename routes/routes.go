@@ -1,12 +1,12 @@
 package routes
 
 import (
-	"github.com/aditya3232/gatewatchApp-services.git/config"
-	"github.com/aditya3232/gatewatchApp-services.git/connection"
-	"github.com/aditya3232/gatewatchApp-services.git/handler"
-	"github.com/aditya3232/gatewatchApp-services.git/middleware"
-	"github.com/aditya3232/gatewatchApp-services.git/model/publisher_human_detection"
-	"github.com/aditya3232/gatewatchApp-services.git/model/tb_tid"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/config"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/connection"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/handler"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/middleware"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/model/publisher_human_detection"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/model/tb_tid"
 	"github.com/gin-gonic/gin"
 )
 

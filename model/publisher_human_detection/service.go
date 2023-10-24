@@ -1,8 +1,8 @@
 package publisher_human_detection
 
 import (
-	"github.com/aditya3232/gatewatchApp-services.git/helper"
-	"github.com/aditya3232/gatewatchApp-services.git/model/tb_tid"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/helper"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/model/tb_tid"
 )
 
 type Service interface {

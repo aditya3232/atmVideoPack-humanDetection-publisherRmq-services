@@ -3,10 +3,10 @@ package handler
 import (
 	"net/http"
 
-	"github.com/aditya3232/gatewatchApp-services.git/constant"
-	"github.com/aditya3232/gatewatchApp-services.git/helper"
-	"github.com/aditya3232/gatewatchApp-services.git/log"
-	"github.com/aditya3232/gatewatchApp-services.git/model/publisher_human_detection"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/constant"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/helper"
+	log_function "github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/log"
+	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/model/publisher_human_detection"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )
@@ -28,7 +28,7 @@ func (h *PublisherHumanDetectionHandler) CreateQueueHumanDetection(c *gin.Contex
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}
 		response := helper.APIResponse(constant.InvalidRequest, http.StatusBadRequest, errorMessage)
-		log.Error(err)
+		log_function.Error(err)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
@@ -38,12 +38,12 @@ func (h *PublisherHumanDetectionHandler) CreateQueueHumanDetection(c *gin.Contex
 		errors := helper.FormatError(err)
 		errorMessage := gin.H{"errors": errors}
 		response := helper.APIResponse(constant.CannotProcessRequest, http.StatusBadRequest, errorMessage)
-		log.Error(err)
+		log_function.Error(err)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
 	response := helper.APIResponse(constant.SuccessMessage, http.StatusOK, publisher_human_detection.PublisherHumanDetectionFormat(humanDetection))
-	log.Info("Queue human detection berhasil dibuat")
+	log_function.Info("Queue human detection berhasil dibuat")
 	c.JSON(http.StatusOK, response)
 }
