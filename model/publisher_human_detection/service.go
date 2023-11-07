@@ -2,7 +2,6 @@ package publisher_human_detection
 
 import (
 	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/helper"
-	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/model/tb_tid"
 )
 
 type Service interface {
@@ -17,11 +16,10 @@ type Service interface {
 
 type service struct {
 	humanDetectionRepository Repository
-	tbTidRepository          tb_tid.Repository
 }
 
-func NewService(repository Repository, tbTidRepository tb_tid.Repository) *service {
-	return &service{repository, tbTidRepository}
+func NewService(repository Repository) *service {
+	return &service{repository}
 }
 
 // public message to rmq
@@ -49,14 +47,7 @@ func (s *service) CreateQueueHumanDetection(input RmqPublisherHumanDetectionInpu
 	// get name file
 	fileName := input.FileCaptureHumanDetection.Filename
 
-	// get id from input tid
-	tidID, err := s.tbTidRepository.GetOneByTid(input.Tid)
-	if err != nil {
-		return rmqPublisherHumanDetection, err
-	}
-
 	newRmqPublisherHumanDetection := RmqPublisherHumanDetection{
-		TidID:                              &tidID.ID,
 		Tid:                                input.Tid,
 		DateTime:                           input.DateTime,
 		Person:                             input.Person,

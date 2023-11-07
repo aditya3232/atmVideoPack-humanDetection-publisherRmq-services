@@ -6,17 +6,15 @@ import (
 	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/handler"
 	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/middleware"
 	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/model/publisher_human_detection"
-	"github.com/aditya3232/atmVideoPack-humanDetection-publisherRmq-services.git/model/tb_tid"
 	"github.com/gin-gonic/gin"
 )
 
 func Initialize(router *gin.Engine) {
 	// Initialize repositories
 	publisherHumanDetectionRepository := publisher_human_detection.NewRepository(connection.RabbitMQ())
-	tbTidRepository := tb_tid.NewRepository(connection.DatabaseMysql())
 
 	// Initialize services
-	publisherHumanDetectionService := publisher_human_detection.NewService(publisherHumanDetectionRepository, tbTidRepository)
+	publisherHumanDetectionService := publisher_human_detection.NewService(publisherHumanDetectionRepository)
 
 	// Initialize handlers
 	publisherHumanDetectionHandler := handler.NewPublisherHumanDetectionHandler(publisherHumanDetectionService)
